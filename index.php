@@ -9,19 +9,23 @@
 </head>
 <body>
     <?php
-        require "./conf/prueba.php";
+        require "./controller/EmpleadosController.php";
+        $empleados = new EmpleadosController();
+        #print_r($empleados->all());
+        $datos = $empleados->all(); //[]
+        /*require "./conf/prueba.php";
 
         $emp = new Prueba();
         print_r($emp->obtenerEmpleados());
         $dat = $emp->obtenerEmpleados();
-        /*foreach($dat as $value){
+        foreach($dat as $value){
             echo $dat['nombre'];
         }*/
 
-?>
+    ?>
     <div class="container">
         <h1 class="text-center">Lista de Empleados</h1>
-        
+        <a class="btn btn-primary" href="./registrarEmpleado.php">Registrar Empleado</a>
         <table class="table table-hover">
             <thead>
                 <th>N°</th>
@@ -32,7 +36,32 @@
                 <th>Departamento</th>
             </thead>
             <tbody>
-                
+                <?php
+                    #iteramos la informacion que se trajo de la consulta sql
+                    $cont = 1;
+                    foreach($datos as $item){
+                ?>
+                    <tr>
+                        <!-- llamando los campos de la tabla -->
+                        <td><?php echo $cont; ?></td>
+                        <td><?php echo $item['nombre']; ?></td>
+                        <td><?php echo $item['correo']; ?></td>
+                        <td><?php echo $item['telefono']; ?></td>
+                        <td><?php echo $item['edad']; ?></td>
+                        <td><?php echo $item['idDepartamento']; ?></td>
+                        <td>
+                            <input type="hidden" name="id_empleado" value="<?php echo $item['Id'];  ?>">
+                            <button class="btn btn-info">Actualizar</button>
+                        </td>
+                        <td>
+                            <input type="hidden" name="id_empleado" value="<?php echo $item['Id'];  ?>">
+                            <button class="btn btn-danger">Eliminar</button>
+                        </td>
+                    </tr>
+                <?php
+                    $cont++;
+                    }
+                ?>
             </tbody>
         </table>
     </div>
