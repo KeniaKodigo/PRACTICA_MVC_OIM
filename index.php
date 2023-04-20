@@ -50,17 +50,23 @@
                         <td><?php echo $item['edad']; ?></td>
                         <td><?php echo $item['idDepartamento']; ?></td>
                         <td>
-                            <input type="hidden" name="id_empleado" value="<?php echo $item['Id'];  ?>">
-                            <button class="btn btn-info">Actualizar</button>
+                            <form action="./actualizarEmpleado.php" method="POST">
+                                <input type="hidden" name="id_empleado" value="<?php echo $item['Id'];  ?>">
+                                <button class="btn btn-info">Actualizar</button>
+                            </form>
                         </td>
                         <td>
-                            <input type="hidden" name="id_empleado" value="<?php echo $item['Id'];  ?>">
-                            <button class="btn btn-danger">Eliminar</button>
+                            <form action="./index.php" method="POST">
+                                <input type="hidden" name="id_empleado" value="<?php echo $item['Id'];  ?>">
+                                <button class="btn btn-danger">Eliminar</button>
+                            </form>
                         </td>
                     </tr>
                 <?php
                     $cont++;
                     }
+
+                    $empleados->employeeDelete();
                 ?>
             </tbody>
         </table>

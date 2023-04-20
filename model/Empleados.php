@@ -70,6 +70,54 @@ class Empleados extends Conexion{
         }
         
     }
+
+    #metodo para generar una consulta que lleve la informacion de un empleado en especifico
+    public function find($id){
+        $this->conectar();
+        $sql = "SELECT *, empleados.Id AS idEmpleado, departamento.Nombre AS departamento FROM empleados INNER JOIN departamento ON empleados.idDepartamento = departamento.Id WHERE empleados.Id = $id";
+        $this->query = mysqli_query($this->conexion, $sql);
+        return $this->query;
+    }
+
+    #metodo para actualizar empleado
+    public function update($id, $data){
+        $this->conectar();
+        #update empleados set nombre = 'Juana', correo = '', telefono = ''  where id = 1;
+        $array = [];
+
+        /**
+         * $data = array("nombre" => "adonay")
+         */
+        foreach($data as $key => $value){
+            $array[] = "{$key} = '{$value}'";
+        }
+        /**
+         * $array = ["nombre" => 'adonay'
+         *           "correo" => 'adonay@gmail.com']
+         */
+
+        #convertir un arreglo a cadena
+        $array = implode(', ', $array); //[1,2,3] = 1-2-3 => nombre = 'adonay', correo = 'adonay@gmail.com'
+
+        $sql = "UPDATE empleados SET {$array}  where Id = $id";
+        $this->query = mysqli_query($this->conexion, $sql);
+        if(!empty($this->query)){
+            //redireccionamos a la tabla
+
+            #header() => es un metodo que nos ayudar a redireccionar a x archivo
+            header("location: index.php");
+        }else{
+            echo "Error al actualizar el empleado";
+        }
+
+    }
+
+    public function delete($id){
+        $this->conectar();
+        $sql = "DELETE FROM empleados WHERE id = $id";
+        $this->query = mysqli_query($this->conexion, $sql);
+        return $this->query;
+    }
 }
 
 
